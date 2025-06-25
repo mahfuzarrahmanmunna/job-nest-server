@@ -141,7 +141,7 @@ const uri = `mongodb+srv://${process.env.DB_USERS}:${process.env.DB_PASS}@cluste
 
 ```bash
 # Clone the repository
-git clone https://github.com/mahfuzarrahmanmunna/freelancing-task-backend.git
+git clone https://github.com/mahfuzarrahmanmunna/job-nest-server.git
 
 # Go into the project directory
 cd freelancing-task-backend
