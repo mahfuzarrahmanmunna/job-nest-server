@@ -24,7 +24,7 @@ This is the **backend server** for the Freelancing Task Marketplace web app. It 
 
 ## 🌐 Deployment
 
-**Production URL**: [https://your-production-url.com](https://freelance-task-marketplace-server.vercel.app/)
+**Production URL**: [https://freelance-task-marketplace-server.vercel.app/](https://freelance-task-marketplace-server.vercel.app/)
 **Frontend URL**: [https://jobnest-a10.web.app/](https://jobnest-a10.web.app/)
 
 > 🔐 Make sure to create a `.env` file with the following variables:
