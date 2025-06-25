@@ -4,6 +4,13 @@ This is the **backend server** for the Freelancing Task Marketplace web app. It 
 
 ---
 
+## 🧾 Description
+
+**Freelancing Task Marketplace Server** is the backend system for a job task marketplace where users can register, post freelance tasks, and place bids. This server handles core functionalities such as task creation, sorting by deadlines, bidding, and user tracking. Built with **Node.js**, **Express.js**, and **MongoDB**, it offers a fast, scalable, and RESTful API foundation for any freelancing platform. Ideal for connecting task posters with potential freelancers in real time.
+
+
+---
+
 ## 🛠️ Tech Stack
 
 - **Runtime**: Node.js  
