@@ -35,20 +35,33 @@ async function run() {
         // Add new user
         app.post('/users', async (req, res) => {
             const newUsers = req.body;
+            console.log(newUsers);
             const result = await userCollections.insertOne(newUsers);
             res.send(result);
         });
 
         // Update user sign-in time
         app.patch('/users', async (req, res) => {
-            const { email, lastSignInTime } = req.body;
+            const { email, lastSignInTime, uid, displayName, photoURL } = req.body;
+            console.log(email);
+
             const filter = { email };
             const updatedDoc = {
-                $set: { lastSignInTime }
+                $set: {
+                    uid,
+                    email,
+                    displayName,
+                    photoURL,
+                    lastSignInTime
+                }
             };
-            const result = await userCollections.updateOne(filter, updatedDoc);
+
+            const options = { upsert: true }; // 🔥 this creates the user if not found
+
+            const result = await userCollections.updateOne(filter, updatedDoc, options);
             res.send(result);
         });
+
 
         // Get all tasks
         app.get('/tasks-nest', async (req, res) => {
@@ -75,8 +88,40 @@ async function run() {
             const result = await tasksCollections
                 .find()
                 .sort({ formateDate: -1 })
-                .limit(6)
+                .limit(8)
                 .toArray();
+            res.send(result);
+        });
+
+        // GET /tasks-nest/sort?order=asc&sortBy=formateDate
+        app.get('/tasks-nest/sort', async (req, res) => {
+            const { order = 'desc', sortBy = 'formateDate' } = req.query;
+            const sortDirection = order === 'asc' ? 1 : -1;
+
+            try {
+                const result = await tasksCollections
+                    .find({})
+                    .sort({ [sortBy]: sortDirection })
+                    .toArray();
+
+                console.log(`Sorting by ${sortBy} in ${order} order`);
+                res.send(result);
+            } catch (error) {
+                console.error('Sorting error:', error);
+                res.status(500).send({ error: 'Failed to sort tasks.' });
+            }
+        });
+
+        // get highest bid first
+        app.get('/tasks-nest/highest-bid', async (req, res) => {
+            const limit = parseInt(req.query.limit) || 6; // default to 6 if not passed
+
+            const result = await tasksCollections
+                .find()
+                .sort({ bids: -1 }) // sort by highest bids
+                .limit(limit)       // return only limited number of results
+                .toArray();
+
             res.send(result);
         });
 
